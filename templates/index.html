@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>   
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
+     <!-- favicon -->
+<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename = 'apple-icon-57x57.png')}}">
+<link rel="apple-touch-icon" sizes="60x60" href="{{url_for('static', filename = 'apple-icon-60x60.png')}}">
+<link rel="apple-touch-icon" sizes="72x72" href="{{url_for('static', filename = 'apple-icon-72x72.png')}}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{url_for('static', filename = 'apple-icon-76x76.png')}}">
+<link rel="apple-touch-icon" sizes="114x114" href="{{url_for('static', filename = 'apple-icon-114x114.png')}}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{url_for('static', filename = 'apple-icon-120x120.png')}}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{url_for('static', filename = 'apple-icon-144x144.png')}}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{url_for('static', filename = 'apple-icon-152x152.png')}}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename = 'apple-icon-180x180.png')}}">
+<link rel="icon" type="image/png" sizes="192x192"  href="{{url_for('static', filename = 'android-icon-192x192.png')}}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename = 'favicon-32x32.png')}}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{url_for('static', filename = 'favicon-96x96.png')}}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename = 'favicon-16x16.png')}}">
+<link rel="manifest" href="{{url_for('static', filename = 'manifest.json')}}">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="{{url_for('static', filename = 'ms-icon-144x144.png')}}">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+   <title>Sticky Notes for the Web !</title>
+   <style type="text/css">
+    body{
+        background-image: url( {{url_for('static', filename='img/bg.jpeg')}});
+    }
+   </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- <a class="navbar-brand" href="#" style="color:">Note</a> -->
+
+      <a  class="navbar-brand" href="#"><button class="btn btn-success" onclick="create_new_note()"> Create New Note
+            </button>
+      </a>
+        <div class="nav-item" id="1_d" style="padding-right: 0">
+              <!-- <form action="/delete" method="post"> -->
+                  <a class="nav-link" href="#" id="2_d" onclick="deleteAllNote()"><button class="btn btn-danger">Delete All Note
+          </button>
+          </a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <!-- </ul> -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li>
+            <div class="navbar-nav">
+              {% if current_user.is_authenticated %}
+              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+              {% else %}
+              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+              {% endif%}
+
+            </div>
+          </li>
+      </div>
+      </ul>
+    </nav>
+    <main role="main" class="container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% block content %}{% endblock %}
+      </main>
+    <ul id="notes" class="child"></ul>
+    <ul id="after" class="child">
+
+    <!-- display note -->
+      {% if current_user.is_authenticated %}
+      {% for note in notes%}
+            <li id ="{{note.id}}" style="position: relative;"> 
+                <input type="submit"  id="delete"  value="Delete" onclick="confirm_deletion('{{note.id}}')">
+                <div >{{ note.text}}
+                    <div style="position: absolute; bottom: 0;right: 0;"> 
+                        <button form="updating" id="update_id" type="submit">  <i class="fa fa-edit" onclick="create_new_note('{{note.id}}','{{note.text}}')" ></i></button>
+                    </div>
+                </div>
+            </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+
+    <div id="forms"></div>
+    <script type="text/javascript">
+        function deleteAllNote(){
+          var txt;
+          var r = confirm("ALL THIS DAMN NOTE WILL BE DELETED?!");
+          if (r == true) {
+            deleting()
+          } else {
+            txt = "You pressed Cancel!";
+          }
+
+        };
+        function deleting(){
+
+            var w = document.getElementById('1_d');
+            var x = document.getElementById('2_d');
+            var new_form = document.createElement('FORM');
+            new_form.setAttribute('action', '/delete');
+            new_form.setAttribute('method', 'post');
+            new_form.appendChild(x);
+            w.appendChild(new_form);
+
+
+        };
+
+
+
+       // confirms if the user wants to delte note 
+       function confirm_deletion(id) {
+          var txt;
+          var r = confirm("DO YOU WANT TO DELETE THIS NOTE?!");
+          if (r == true) {
+            
+            form_for_deleting(id);
+            
+          } else {
+            txt = "You pressed Cancel!";
+          }
+          // document.getElementById("after").innerHTML = txt;
+        };
+
+        function form_for_deleting(id){
+            var ul = document.getElementById("after")
+            var li = document.getElementById(id)
+            li.setAttribute("id", id);
+            // ul.innerHTML = "  <form  name ={{id}} action={{url_for('remove', note_id=id)}} method=post> "
+              var new_form = document.createElement("FORM");
+              new_form.setAttribute("action", "/remove/"+id)
+              new_form.setAttribute("method", "post")
+              new_form.setAttribute("id", id)
+              new_form.appendChild(li)
+
+              input = document.createElement("Input");
+              input.setAttribute("type", "hidden");
+              // input.setAttribute("id", "save_text");
+              input.setAttribute("value", "Delete");
+              new_form.appendChild(input)
+              ul.appendChild(new_form)
+        };
+        function remove_form(id){
+        var form = document.getElementById(id)
+        form.parentNode.removeChild(form);
+      };
+
+
+        // var count = 0
+        function create_new_note(id=null, text=null) {
+
+            var fo = document.createElement("FORM");
+            fo.setAttribute("method", "post")
+
+
+            save = document.createElement("DIV");
+            save.setAttribute("class", "tape2");
+
+            inp = document.createElement("Input");
+            inp.setAttribute("type", "submit");
+            inp.setAttribute("id", "save_text");
+            inp.setAttribute("value", "Save");
+
+            var y = document.createElement("LI");
+            y.setAttribute("name", "1");
+            save.appendChild(inp);
+
+            y.appendChild(save);
+
+          
+
+          // count += 1
+
+          var texts =document.createElement("TEXTAREA");
+          texts.setAttribute("cols", "35")
+          texts.setAttribute("rows", "10")
+           if (text != null) {
+              fo.setAttribute("action", "/update/"+id)
+              texts.defaultValue = text;
+              var li = document.getElementById(id)
+              var p = li.parentNode.removeChild(li)
+
+            
+          } else {
+            fo.setAttribute("action", "/add")
+            txt = "You pressed Cancel!";
+          }
+          
+
+          texts.setAttribute("name", "text")
+          texts.setAttribute("maxlength", "400")
+          y.appendChild(texts)
+
+          // y.appendChild(form);
+          fo.appendChild(y)
+          document.getElementById("notes").appendChild(fo);
+
+        };
+    </script>
+ 
+
+</body>
+</html>

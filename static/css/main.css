@@ -1,0 +1,192 @@
+body {
+    background: #63738a;
+}
+a {color:#333; text-decoration:none;}
+a:hover {text-decoration:underline;}
+
+#notes li {
+    position: relative;
+    width: 300px;
+    min-height: 100px;
+    margin: 25px auto;
+    padding: 15px;
+    background: #f1f3a2;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(247,247,210,1)), to(rgba(240,242,155,1)));
+    background: -moz-linear-gradient(top, rgba(247,247,210,1), rgba(240,242,155,1));
+    -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 12px (rgba(0,0,0.5));
+    box-shadow: 0 1px 2px #000;
+    -webkit-transform: rotate(-.5deg);
+    -moz-transform: rotate(-.5deg);
+    -o-transform: rotate(-.5deg);
+}
+
+#notes li:nth-child(even) {
+    -webkit-transform: rotate(.5deg);
+    -moz-transform: rotate(.5deg);
+    -o-transform: rotate(.5deg);
+}
+
+#notes li div.tape1{
+    position: absolute;
+    left: 90px;
+    top: -15px;
+    width: 30px;
+    height: 25px;
+    z-index: 2;
+    /*background-color: rgba(243,245,228,0.5);*/
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    /*box-shadow: 2px 2px 2px #000;*/
+    -webkit-transform: rotate(-6deg);
+    -moz-transform: rotate(-6deg); 
+    -o-transform: rotate(-6deg);
+}
+/*#text_input{
+  width:30px;
+  left: 200px;
+  padding:2px;
+  top: -5px;
+  background-color: rgba(0,255,0,0.7);
+
+}*/
+div.tape1{
+    background-color: rgba(255,0, 0,0.5);
+}
+#save_text{
+    left: 200px;
+    background-color: rgba(0,255,0,0.7);
+
+
+}
+
+/*#remove_note{
+  position: relative;
+  top: -5px;
+  left:-100px;
+  width: 77px;
+  background-color: rgba(255, 0, 0, 0.7);
+  height: 25px;
+  z-index: 2;
+  border: 2px solid rgba(255,255,255,0.5);
+  -webkit-box-shadow: 0 0 5px #888;
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-transform: rotate(-10deg);
+  -moz-transform: rotate(9deg); 
+  -o-transform: rotate(9deg);
+
+}
+*/
+
+
+
+form{
+  margin: 4px;
+}
+#delete_text{
+    left: 90px;
+    background-color: rgba(255,0, 0,0.7);
+
+    
+  
+}
+#save_text{
+    position: absolute;
+    top: -15px;
+    /*width: 40px;*/
+    height: 25px;
+    z-index: 2;
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg); 
+    -o-transform: rotate(6deg);
+}
+#delete{
+    position: absolute;
+    top: -15px;
+    width: 77px;
+    background-color: rgba(255, 0, 0, 0.7);
+    height: 25px;
+    z-index: 2;
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(9deg); 
+    -o-transform: rotate(9deg);
+}
+
+#notes li:nth-child(even) div.tape {
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+}
+textarea { 
+   /* will prevent resizing horizontally */
+  /*resize: none;
+  overflow: hidden;*/
+  max-width: 100%; 
+  max-height: 100%;
+}
+.child {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  /*margin: 5px;*/
+  /*padding: 0;*/
+  /*height: 100px;*/
+}
+
+.child li {
+  /*width: 23%;*/
+  /*height: 49px;
+  margin: 1px 1%;*/
+  text-align: center;
+  /*background: #069;*/
+  /*color: #fff;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#after li {
+    position: relative;
+    width: 300px;
+    min-height: 100px;
+    margin: 25px auto;
+    padding: 15px;
+    background: #f1f3a2;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(247,247,210,1)), to(rgba(240,242,155,1)));
+    background: -moz-linear-gradient(top, rgba(247,247,210,1), rgba(240,242,155,1));
+    -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 12px (rgba(0,0,0.5));
+    box-shadow: 0 1px 2px #000;
+    -webkit-transform: rotate(-.5deg);
+    -moz-transform: rotate(-.5deg);
+    -o-transform: rotate(-.5deg);
+}
+
+#after li:nth-child(even) {
+    -webkit-transform: rotate(.5deg);
+    -moz-transform: rotate(.5deg);
+    -o-transform: rotate(.5deg);
+}
+
+#after li p {
+    text-align: center;
+    font: normal normal normal 40px/48px 'Reenie Beanie', Helvetica, Arial, sans-serif;
+    color: #000;
+    text-shadow: white 1px 1px 0px;
+    overflow:hidden;
+}
+
+
+#after li:nth-child(even) div.sticky {
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+}
